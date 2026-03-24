@@ -1,0 +1,47 @@
+
+const int buttonPin = 2;
+const int porchLED = 8;
+const int hallwayLED = 9;
+
+// Variable to track button press
+int buttonState = 0;
+
+void setup() {
+  pinMode(buttonPin, INPUT_PULLUP);   
+  pinMode(porchLED, OUTPUT);
+  pinMode(hallwayLED, OUTPUT);
+
+  Serial.begin(9600);
+}
+
+void loop() {
+  buttonState = digitalRead(buttonPin);
+
+  // Button pressed (LOW because of INPUT_PULLUP)
+  if (buttonState == LOW) {
+    Serial.println("Linda arrived - Lights ON");
+
+    // Turn both lights ON
+    digitalWrite(porchLED, HIGH);
+    digitalWrite(hallwayLED, HIGH);
+
+    delay(30000);
+
+    // Turn OFF porch light
+    digitalWrite(porchLED, LOW);
+    Serial.println("Porch light OFF");
+
+    delay(30000); 
+
+    // Turn OFF hallway light
+    digitalWrite(hallwayLED, LOW);
+    Serial.println("Hallway light OFF");
+
+    
+    while (digitalRead(buttonPin) == LOW) {
+      delay(10);
+    }
+
+    delay(200); 
+  }
+}
